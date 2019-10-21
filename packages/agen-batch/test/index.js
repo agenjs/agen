@@ -1,7 +1,7 @@
 const expect = require('expect.js');
 const batch = require('../src');
 
-describe('batch', async () => {
+describe('batch', function() {
 
   it(`should transform sequence of elements to batches`, async () => {
     const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
