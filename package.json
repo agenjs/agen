@@ -3,7 +3,7 @@
   "description": "Utilities for JavaScript asynchronous generators",
   "private": true,
   "author": "Mikhail Kotelnikov <mikhail.kotelnikov@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "lerna": "^3.18.2"
   },
