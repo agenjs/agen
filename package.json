@@ -1,7 +1,6 @@
 {
   "name": "@agen/root",
   "description": "Utilities for JavaScript asynchronous generators",
-  "private": true,
   "author": "Mikhail Kotelnikov <mikhail.kotelnikov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
