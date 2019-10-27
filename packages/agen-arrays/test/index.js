@@ -2,7 +2,6 @@ const expect = require('expect.js');
 const { arraysFromDsv, arraysToDsv } = require('../src');
 
 describe('arraysFromDsv', async () => {
-
   it(`should generate arrays from a list of separated values`, async () => {
     const list = ['a;A', 'b;B', 'c;C', 'd;D', 'abc:Hello, world!;two;three', 'k'];
     let i = 0;
@@ -14,7 +13,6 @@ describe('arraysFromDsv', async () => {
 });
  
 describe('arraysToDsv', async () => {
-
   it(`should generate string from a list of arrays`, async () => {
     const list = [
       ['a', 'A'],
@@ -32,5 +30,4 @@ describe('arraysToDsv', async () => {
     }
     expect(i).to.eql(list.length);
   })
-
 });
