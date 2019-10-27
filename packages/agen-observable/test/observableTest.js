@@ -13,13 +13,13 @@ describe('observer', async () => {
       (async() => {
         try {
           for await (let item of list) {
-            observer.next(item);
+            await observer.next(item);
           }
+          finished = true;
           await observer.complete();
         } catch (err) {
           await observer.error(err);
         }
-        finished = true;
       })();
     });
 
@@ -31,18 +31,18 @@ describe('observer', async () => {
   })
 
   it (`should be able notify about all sync events without waiting the return; there is a timeout in the consumer`, async () => {
-    let finished = false;
+    let finished = false, end = false;
     const gen = observe(async (observer) => {
       (async() => {
         try {
           for await (let item of list) {
-            observer.next(item);
+            await observer.next(item);
           }
+          finished = true;
           await observer.complete();
         } catch (err) {
           await observer.error(err);
         }
-        finished = true;
       })();
     });
 
@@ -247,7 +247,7 @@ describe('observer', async () => {
         finished = true;
       }
     });
-    let counter = 0;
+    let error, counter = 0;
     try {
       for await (let n of gen) {
         expect(finished).to.be(false);
