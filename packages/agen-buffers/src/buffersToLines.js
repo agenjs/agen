@@ -1,7 +1,7 @@
 const { StringDecoder } = require('string_decoder');
 
-module.exports = async function* buffersToLines(provider, encoding = 'UTF-8') {
-  const decoder = new StringDecoder(encoding);
+module.exports = async function* buffersToLines(provider, enc = 'UTF-8') {
+  const decoder = new StringDecoder(enc);
   let buffer;
   for await (let chunk of provider) {
     buffer = buffer || '';
