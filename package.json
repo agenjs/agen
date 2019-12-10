@@ -9,6 +9,6 @@
   "scripts": {
     "postinstall": "lerna bootstrap --hoist",
     "bootstrap": "lerna exec npm install",
-    "test": "lerna exec npm test"
+    "test": "lerna exec --concurrency 1 -- npm test"
   }
 }
