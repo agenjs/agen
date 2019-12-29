@@ -1,9 +1,9 @@
 {
   "name": "@agen/arrays",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Transformations from/to arrays",
   "keywords": [],
-  "homepage" : "https://github.com/mkotelnikov/agen",
+  "homepage": "https://github.com/mkotelnikov/agen",
   "author": {
     "name": "Mikhail Kotelnikov",
     "email": "mikhail.kotelnikov@gmail.com"
@@ -21,8 +21,8 @@
     "src/**/*.js"
   ],
   "scripts": {
-    "eslint" : "../../node_modules/eslint/bin/eslint.js src",
-    "rollup" : "../../node_modules/rollup/dist/bin/rollup -c",
+    "eslint": "../../node_modules/eslint/bin/eslint.js src",
+    "rollup": "../../node_modules/rollup/dist/bin/rollup -c",
     "test": "../../node_modules/mocha/bin/mocha -R spec ./test/index.js && npm run eslint",
     "pretest": "npm run rollup",
     "postinstall": "npm run rollup",
