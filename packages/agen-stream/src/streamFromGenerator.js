@@ -1,7 +1,8 @@
-const stream = require('stream');
-module.exports = function streamFromGenerator(provider, objectMode = true) {
+import { Readable } from 'stream';
+
+export function streamFromGenerator(provider, objectMode = true) {
   const it = provider[Symbol.iterator] ? provider[Symbol.iterator]() : provider;
-  return new stream.Readable({
+  return new Readable({
     objectMode,
     async read() {
       try {

@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const map = require('../src');
+const { map } = require('..');
 
 describe('map', function() {
 

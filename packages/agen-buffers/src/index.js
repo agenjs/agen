@@ -1,5 +1,3 @@
-module.exports = {
-  buffersFromStrings : require('./buffersFromStrings'),
-  buffersToLines : require('./buffersToLines'),
-  fixedSizeBuffers : require('./fixedSizeBuffers')
-}
+export { buffersFromStrings } from './buffersFromStrings';
+export { buffersToLines } from './buffersToLines';
+export { fixedSizeBuffers } from './fixedSizeBuffers';

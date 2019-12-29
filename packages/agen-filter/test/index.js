@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const filter = require('../src');
+const { filter } = require('..');
 
 describe('filter', function() {
 

@@ -1,5 +1,3 @@
-module.exports = {
-  batch : require('./batch'),
-  chunks : require('./chunks'),
-  series : require('./series')
-}
+export { batch } from './batch';
+export { chunks } from './chunks';
+export { series } from './series';

@@ -1,8 +1,8 @@
-const streamToPromise = require('util').promisify(require('stream').finished);
-const withStreamData = require('./withStreamData');
-const { observe } = require('@agen/observable');
+import { withStreamData } from './withStreamData';
+import { observe } from '@agen/observable';
+import { streamToPromise } from './streamToPromise';
 
-module.exports = async function* streamToGenerator(stream) {
+export async function* streamToGenerator(stream) {
   yield* observe((observer) => {
     let promise = (async () => {
       try {
@@ -14,7 +14,7 @@ module.exports = async function* streamToGenerator(stream) {
     })();
     return async (error) => {
       let m, args=[];
-      if (stream.destroy) { m = stream.destroy; args.push(error); } else { m = stream.close; }
+      if (stream.destroy) { m = stream.destroy; args.push(error); } else { m = stream.close; }
       if (m) await new Promise(cb => (args.push(cb), m.apply(stream, args)));
       await promise;
       // if (error) throw error;

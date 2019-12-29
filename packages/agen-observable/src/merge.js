@@ -1,7 +1,7 @@
-const observe = require('./observe');
-const subscribe = require('./subscribe');
+import { observe } from './observe';
+import { subscribe } from './subscribe';
 
-module.exports = async function* merge(...generators) {
+export async function* merge(...generators) {
   const array = [];
   try {
     yield* await observe(async (observer) => {

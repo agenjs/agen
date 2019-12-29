@@ -1,9 +1,9 @@
-const { withIterators } = require('@agen/utils');
+import { withIterators } from '@agen/utils';
 /**
  * Split sequence of items to multiple async iterators using the provided
  * "split" method.
  */
-module.exports = async function* series(provider, split) {
+export async function* series(provider, split) {
   yield* withIterators([provider], async function*([it]) {
     let slot, counter = -1;
     while (!slot || !slot.done) { yield chunk(); }

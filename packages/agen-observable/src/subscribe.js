@@ -1,11 +1,11 @@
-module.exports = function subscribe(it, observer) {
+export function subscribe(it, observer) {
   let stop = false, promise;
   return {
-    get promise() { return promise; },
+    get promise() { return promise; },
     async start() {
       if (promise) throw new Error('Iteration already started.');
       promise = (async () => {
-        try {
+        try {
           for await (let item of it) {
             await observer.next(item);
             if (stop) break;
@@ -20,7 +20,9 @@ module.exports = function subscribe(it, observer) {
     },
     async stop() {
       stop = true;
-      try { await promise; } catch (err) {}
+      try { await promise; } catch (err) {
+        // empty
+      }
     }
   }
 }

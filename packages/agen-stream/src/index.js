@@ -1,5 +1,4 @@
-module.exports = {
-  streamFromGenerator : require('./streamFromGenerator'),
-  streamToGenerator : require('./streamToGenerator'),
-  withStreamData : require('./withStreamData')
-}
+export * from './streamFromGenerator';
+export * from './streamToGenerator';
+export * from './withStreamData';
+export * from './streamToPromise';

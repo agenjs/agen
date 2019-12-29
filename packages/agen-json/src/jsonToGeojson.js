@@ -1,6 +1,6 @@
-module.exports = async function* jsonToGeojson(provider, options = {}) {
-  const latField = options.latField || 'latitude';
-  const lonField = options.lonField || 'longitude';
+export async function* jsonToGeojson(provider, options = {}) {
+  const latField = options.latField || 'latitude';
+  const lonField = options.lonField || 'longitude';
   for await (let item of provider) {
     const properties = Object.assign({}, item);
     const latitude = parseFloat(properties[latField]);

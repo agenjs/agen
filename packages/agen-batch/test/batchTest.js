@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { batch } = require('../src');
+const { batch } = require('..');
 
 describe('batch', function() {
 

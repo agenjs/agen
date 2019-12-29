@@ -1,4 +1,4 @@
-module.exports = async function* batch(provider, batchSize = 10) {
+export async function* batch(provider, batchSize = 10) {
   let batch = [];
   for await (let value of provider) {
     batch.push(value);

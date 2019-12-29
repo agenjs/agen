@@ -1,4 +1,4 @@
-module.exports = async function getIterator(provider) {
+export async function getIterator(provider) {
   return provider[Symbol.asyncIterator]
     ? await provider[Symbol.asyncIterator]()
     : provider[Symbol.iterator]

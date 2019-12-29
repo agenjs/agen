@@ -1,7 +1,5 @@
-module.exports = {
-  jsonFromArrays : require('./jsonFromArrays'),
-  jsonFromStrings : require('./jsonFromStrings'),
-  jsonToArrays : require('./jsonToArrays'),
-  jsonToGeojson : require('./jsonToGeojson'),
-  jsonToStrings : require('./jsonToStrings'),
-}
+export { jsonFromArrays } from './jsonFromArrays';
+export { jsonFromStrings } from './jsonFromStrings';
+export { jsonToArrays } from './jsonToArrays';
+export { jsonToGeojson } from './jsonToGeojson';
+export { jsonToStrings } from './jsonToStrings';

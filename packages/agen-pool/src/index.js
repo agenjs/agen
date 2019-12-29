@@ -1,6 +1,6 @@
-const { observe } = require('@agen/observable');
+import { observe } from '@agen/observable';
 
-async function* pool(provider, action, poolSize = 1) {
+export async function* pool(provider, action, poolSize = 1) {
   yield* observe((observer) => {
     let stop = false;
     (async () => {
@@ -34,5 +34,3 @@ async function* pool(provider, action, poolSize = 1) {
     return () => stop = true;
   });
 }
-
-module.exports = { pool }

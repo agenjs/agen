@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { jsonFromArrays, jsonFromStrings, jsonToStrings } = require('../');
+const { jsonFromArrays, jsonFromStrings, jsonToStrings } = require('..');
 
 describe('jsonFromArrays', async () => {
 
