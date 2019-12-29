@@ -30,5 +30,8 @@
     "postpublish": "zip -j dist/agen-observable.zip -- ../../LICENSE README.md dist/agen-observable.js dist/agen-observable.min.js"
   },
   "license": "MIT",
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
