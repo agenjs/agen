@@ -1,4 +1,4 @@
-module.exports = async function* jsonToArrays(provider, { headers } = {}) {
+export async function* jsonToArrays(provider, { headers } = {}) {
   for await (let obj of provider) {
     if (!headers) {
       headers = Object.keys(obj).sort();

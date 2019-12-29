@@ -4,11 +4,22 @@
   "author": "Mikhail Kotelnikov <mikhail.kotelnikov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "lerna": "^3.18.2"
+    "@rollup/plugin-commonjs": "11",
+    "@rollup/plugin-inject": "^4.0.0",
+    "@rollup/plugin-node-resolve": "6",
+    "eslint": "6",
+    "expect.js": "0.3",
+    "lerna": "^3.18.2",
+    "mocha": "6",
+    "rollup": "1",
+    "rollup-plugin-node-builtins": "2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-terser": "5"
   },
   "scripts": {
     "postinstall": "lerna bootstrap --hoist",
     "bootstrap": "lerna exec npm install",
-    "test": "lerna exec --concurrency 1 -- npm test"
+    "test": "lerna exec --concurrency 1 -- npm test",
+    "postpublish": "git push && git push --tags && git commit -m \"${npm_package_name} ${npm_package_version}\" && git push"
   }
 }

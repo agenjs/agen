@@ -1,4 +1,2 @@
-module.exports = {
-  arraysFromDsv : require('./arraysFromDsv'),
-  arraysToDsv : require('./arraysToDsv')
-}
+export { arraysFromDsv } from './arraysFromDsv';
+export { arraysToDsv } from './arraysToDsv';

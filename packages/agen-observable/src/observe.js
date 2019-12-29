@@ -1,6 +1,6 @@
-const Observable = require('./Observable');
-const observableToGenerator = require('./observableToGenerator');
+import { Observable } from './Observable';
+import { observableToGenerator } from './observableToGenerator';
 
-module.exports = function observe(initialize, fifo = []) {
+export function observe(initialize, fifo = []) {
   return observableToGenerator(new Observable(initialize), fifo);
 }

@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { series } = require('../src');
+const { series } = require('..');
 
 describe('series', function() {
 

@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { pool } = require('../src');
+const { pool } = require('..');
 
 describe('pool', async () => {
 

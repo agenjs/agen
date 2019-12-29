@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { observe, subscribe } = require('../src/');
+const { observe, subscribe } = require('..');
 const toAsyncGenerator = require('./toAsyncGenerator');
 const timeout = require('./timeout');
 

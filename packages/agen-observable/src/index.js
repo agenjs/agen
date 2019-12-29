@@ -1,8 +1,5 @@
-module.exports = {
-  observe : require('./observe'),
-  subscribe : require('./subscribe'),
-  merge : require('./merge'),
-
-  Observable : require('./Observable'),
-  observableToGenerator : require('./observableToGenerator')
-}
+export * from './observe';
+export * from './subscribe';
+export * from './merge';
+export * from './Observable';
+export * from './observableToGenerator';

@@ -1,4 +1,4 @@
-module.exports = function observableToGenerator(observable, slots = []) {
+export function observableToGenerator(observable, slots = []) {
   let finished, callback, promise = new Promise(c => callback = c);
   async function push(error, value, done) {
     if (finished) return ;
@@ -15,7 +15,9 @@ module.exports = function observableToGenerator(observable, slots = []) {
     complete : () => push(undefined, undefined, true)
   });
   async function cleanup() {
-    while (await slots.shift()) { } // Cleanup the slots list
+    while (await slots.shift()) { // Cleanup the slots list
+      // empty
+    }
     finished = true;
     slots = { push(){}, shift(){} };
     subscription.unsubscribe();
@@ -24,7 +26,7 @@ module.exports = function observableToGenerator(observable, slots = []) {
   return {
     [Symbol.asyncIterator] : function() { return this; },
     async next() {
-      while (true) {
+      for (;;) {
         await promise;
         const slot = await slots.shift();
         if (slot) {
@@ -36,7 +38,7 @@ module.exports = function observableToGenerator(observable, slots = []) {
         promise = new Promise(c => callback = c);
       }
     },
-    return(value) { return cleanup(); },
-    error(err) { return cleanup(); }
+    return() { return cleanup(); },
+    error() { return cleanup(); }
   }
 }

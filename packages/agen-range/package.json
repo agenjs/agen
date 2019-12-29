@@ -2,14 +2,40 @@
   "name": "@agen/range",
   "version": "0.1.0",
   "description": "Returns specific range of elements",
-  "author": "Mikhail Kotelnikov <mikhail.kotelnikov@gmail.com>",
-  "main": "index.js",
+  "keywords": [],
+  "homepage" : "https://github.com/mkotelnikov/agen",
+  "author": {
+    "name": "Mikhail Kotelnikov",
+    "email": "mikhail.kotelnikov@gmail.com"
+  },
+  "main": "dist/agen-range.js",
+  "unpkg": "dist/agen-range.min.js",
+  "jsdelivr": "dist/agen-range.min.js",
+  "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkotelnikov/agen/agen.git"
+  },
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
   "scripts": {
-    "test": "mocha -R spec ./test/index.js"
+    "test": "mocha -R spec ./test/index.js && eslint src",
+    "pretest": "rollup -c",
+    "postinstall": "rollup -c",
+    "prepublishOnly": "rm -rf dist && yarn test",
+    "postpublish": "zip -j dist/agen-range.zip -- ../../LICENSE README.md dist/agen-range.js dist/agen-range.min.js"
   },
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "mocha": "^6.2.2"
-  }
+    "eslint": "6",
+    "rollup": "1",
+    "rollup-plugin-terser": "5",
+    "@rollup/plugin-node-resolve" : "6",
+    "expect.js": "0.3",
+    "mocha": "6"
+  },  
+  "sideEffects": false
 }

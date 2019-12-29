@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { buffersToLines } = require('../');
+const { buffersToLines } = require('..');
 
 describe('buffersToLines', async () => {
 

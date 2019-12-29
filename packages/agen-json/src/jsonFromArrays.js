@@ -1,6 +1,7 @@
-const GetterSetterBuilder = require('./GetterSetterBuilder');
+import { GetterSetterBuilder } from './GetterSetterBuilder';
+
 function getHandler(handler) {
-  if (typeof handler === 'string') handler = { field : handler };
+  if (typeof handler === 'string') handler = { field : handler };
   if (typeof handler === 'function') handler = { set : handler };
   if (typeof handler !== 'object') return null;
   if (typeof handler.set !== 'function' && handler.field) {
@@ -17,7 +18,7 @@ function getHandler(handler) {
   return handler;
 }
 
-module.exports = async function* jsonFromArrays(provider, options = {}) {
+export async function* jsonFromArrays(provider, options = {}) {
   let { headersLine = 0, dataLine = 1, mapping } = options;
   let headers;
   let line = 0
@@ -31,7 +32,7 @@ module.exports = async function* jsonFromArrays(provider, options = {}) {
           if (!field) continue;
           let handler = getHandler(field);
           if (handler) {
-            headers.push(Object.assign({}, handler, { index : i }));
+            headers.push(Object.assign({}, handler, { index : i }));
           }
         }
       } else if (headers && line >= dataLine) {

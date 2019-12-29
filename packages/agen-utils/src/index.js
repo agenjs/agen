@@ -1,4 +1,2 @@
-module.exports = {
-  getIterator : require('./getIterator'),
-  withIterators : require('./withIterators')
-}
+export { getIterator } from './getIterator';
+export { withIterators } from './withIterators';

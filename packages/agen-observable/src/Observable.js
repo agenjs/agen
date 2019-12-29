@@ -1,4 +1,4 @@
-class Observer {
+export class Observer {
   constructor(...args) {
     this.obj = (typeof args[0] === 'function')
       ? { next : args[0], error : args[1], complete : args[2] }
@@ -25,7 +25,7 @@ class Observer {
   }
 }
 
-class Observable {
+export class Observable {
   constructor(subscribe) { this._subscribe = subscribe; }
   subscribe(...args) {
     const o = new Observer(...args);
@@ -33,8 +33,3 @@ class Observable {
     return { unsubscribe : (e) => (e ? o.error(e) : o.complete()) };
   }
 }
-
-
-Observable.Observer = Observer;
-
-module.exports = Observable;

@@ -1,4 +1,4 @@
-module.exports = async function* fixedSizeBuffers(provider, size) {
+export async function* fixedSizeBuffers(provider, size) {
   size = size || 1024;
   let buf = Buffer.from([]);
   for await (let chunk of provider) {

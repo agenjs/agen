@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { chunks } = require('../src');
+const { chunks } = require('..');
 
 describe('chunks', function() {
 

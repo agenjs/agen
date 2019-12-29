@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const { arraysFromDsv, arraysToDsv } = require('../src');
+const { arraysFromDsv, arraysToDsv } = require('..');
 
 describe('arraysFromDsv', async () => {
 

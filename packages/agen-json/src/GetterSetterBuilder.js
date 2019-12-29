@@ -1,4 +1,4 @@
-module.exports =  class GetterSetterBuilder {
+export class GetterSetterBuilder {
 
   newGetter(path) {
     path = this._toPath(path);
@@ -7,7 +7,7 @@ module.exports =  class GetterSetterBuilder {
       if (!segment) return code;
       return `${code}["${segment}"]`;
     }, '');
-    code = `try{ return obj${code}; } catch (err) {}`;
+    code = `try{ return obj${code}; } catch (err) {}`;
     return new Function(['obj'], `"use strict";\n${code}`);
   }
 
@@ -34,7 +34,7 @@ module.exports =  class GetterSetterBuilder {
 
   newCloneSetter(path) {
     path = this._toPath(path);
-    let code = `var newObj = Object.assign({}, obj || {});\n`;
+    let code = `var newObj = Object.assign({}, obj || {});\n`;
     if (path.length) {
       code += `var o = newObj;\n`;
       for (let i = 0; i < path.length; i++) {
