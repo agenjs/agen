@@ -33,5 +33,8 @@
   "dependencies": {
     "d3-dsv": "^1.1.1"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
