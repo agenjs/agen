@@ -1,4 +1,4 @@
-import { withIterators } from '@agen/utils';
+import { withIterators } from './withIterators';
 
 /**
  * Transforms the given sequence of items to a sequence of async providers.
