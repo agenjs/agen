@@ -33,8 +33,5 @@
   "dependencies": {
     "@agen/observable": "0.1.0"
   },
-  "sideEffects": false,
-  "devDependencies": {
-    "stream-to-promise": "^2.2.0"
-  }
+  "sideEffects": false
 }
