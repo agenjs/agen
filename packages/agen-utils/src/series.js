@@ -1,4 +1,4 @@
-import { withIterators } from '@agen/utils';
+import { withIterators } from './withIterators';
 /**
  * Split sequence of items to multiple async iterators using the provided
  * "split" method.

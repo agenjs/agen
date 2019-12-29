@@ -30,6 +30,8 @@
     "postpublish": "zip -j dist/agen-pool.zip -- ../../LICENSE README.md dist/agen-pool.js dist/agen-pool.min.js"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@agen/observable" : "0.1.0"
+  },
   "sideEffects": false
 }

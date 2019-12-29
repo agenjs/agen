@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const range = require('..');
+const { range } = require('..');
 
 describe('range', async () => {
 
