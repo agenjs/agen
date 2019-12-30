@@ -21,14 +21,18 @@ function getHandler(handler) {
 export async function* jsonFromArrays(provider, options = {}) {
   let { headersLine = 0, dataLine = 1, mapping } = options;
   let headers;
-  let line = 0
+  let line = 0;
+  if (!!mapping && typeof mapping === 'object') {
+    const m = mapping;
+    mapping = (f) => m[f];
+  } else mapping = (v) => v;
   for await (let data of provider) {
     if (!data) continue ;
     if (line === headersLine) {
         headers = [];
         for (let i = 0; i < data.length; i++) {
           let field = data[i];
-          field = (mapping ? mapping[field] : field);
+          field = mapping(field);
           if (!field) continue;
           let handler = getHandler(field);
           if (handler) {
