@@ -1,5 +1,7 @@
 export * from './batch';
 export * from './chunks';
+export * from './decoder';
+export * from './encoder';
 export * from './filter';
 export * from './getIterator';
 export * from './map';
