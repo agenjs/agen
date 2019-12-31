@@ -44,6 +44,30 @@ describe('jsonFromArrays', async () => {
     expect(i).to.eql(control.length);
   })
 
+  it(`should transform an array to json objects with a mapping function`, async () => {
+    const headers = ['firstName', 'lastName', 'age'];
+    const data = [
+      ['firstName', 'lastName', 'age', 'description'],
+      ['John', 'Smith', '35', 'Hello, there!'],
+      ['James', 'Bond', '50', 'Bond, James Bond!']
+    ]
+    const control = [
+      { a : 'John', b : 'Smith', c : 35 },
+      { a : 'James', b : 'Bond', c : 50 },
+    ];
+    let i = 0;
+    const mapping = (f) => {
+      if (f === 'firstName') return 'a';
+      if (f === 'lastName') return 'b';
+      if (f === 'age') return (o, v) => (o.c = +v);
+      return null;
+    }
+    for await (let obj of jsonFromArrays(data, { mapping })) {
+      expect(obj).to.eql(control[i++]);
+    }
+    expect(i).to.eql(control.length);
+  })
+
   it(`should be able to split values`, async () => {
     const headers = ['firstName', 'lastName', 'age'];
     const data = [

@@ -25,7 +25,9 @@ export async function* jsonFromArrays(provider, options = {}) {
   if (!!mapping && typeof mapping === 'object') {
     const m = mapping;
     mapping = (f) => m[f];
-  } else mapping = (v) => v;
+  } else if (typeof mapping !== 'function') {
+    mapping = (f) => f;
+  }
   for await (let data of provider) {
     if (!data) continue ;
     if (line === headersLine) {
