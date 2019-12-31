@@ -1,6 +1,6 @@
 {
   "name": "@agen/pool",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Pool execution",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
@@ -31,7 +31,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@agen/observable": "^0.2.0"
+    "@agen/observable": "^0.3.0"
   },
   "sideEffects": false,
   "publishConfig": {
