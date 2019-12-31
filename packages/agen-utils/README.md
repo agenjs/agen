@@ -23,16 +23,21 @@ OR:
 import { * as utils } from '@agen/utils';
 ```
 
-`batch` method
---------------
+`batch`
+-------
 
+This method transforms a sequence of individual items to "batches" (arrays)
+of the specified size.
 This method accepts the following parameters:
 * generator - asynchronous generator providing inidvidual elements
 * batchSize - size of returned batches; default value is 10
 
 It returns an asynchronous generator providing element batches (arrays)  
-of the specified  size.
+of the specified size.
 
+See also the `fixedSize` method. The `batch` method groups individual items in
+arrays while `fixedSize` accepts arrays of diffent sizes and align them
+to the specified sizes.
 
 Example:
 ```javascript
@@ -110,6 +115,77 @@ for await (let chunk of chunks(list, begin, end)) {
 ```
 
 
+`decoder`
+---------
+This method decodes buffer to string. It accept sequence of buffers and returns
+the corresponding decoded strings. Internally it uses standard TextDecoder
+class. It accepts two parameters:
+* generator - async generator providing binary arrays (buffers)
+* enc - optional encoding for strings in binaries
+
+Example: transforming binary arrays to strings
+```javascript
+const { decoder } = require('@agen/utils');
+const list = [
+  Uint8Array.from([ 70, 105, 114, 115, 116, 32,  77, 101, 115, 115, 97, 103, 101 ]),
+  Uint8Array.from([ 72, 101, 108, 108, 111,  32, 119, 111, 114, 108, 100 ]),
+  Uint8Array.from([ 83, 101,  99, 111, 110, 100,  32,  77, 101, 115, 115,  97, 103, 101 ]),
+  Uint8Array.from([ 72, 101, 108, 108, 111, 32,  74, 111, 104, 110, 32,  83, 109, 105, 116, 104 ])
+]
+for await (let item of decoder(list, 'UTF-8')) {
+  console.log('-', item);
+}
+// Will print
+// - First Message
+// - Hello world
+// - Second Message
+// - Hello John Smith
+```
+
+`encoder`
+---------
+This method transforms sequence of strings to corresponding binary string
+representation. Strings are always encoded with UTF-8.
+It accepts one parameters:
+* generator - async generator providing strings to encode
+The returned generator yields binary string representation.
+
+Example: strings to binary arrays
+```javascript
+const { encoder } = require('@agen/utils');
+const list = [
+  'First Message',
+  'Hello world',
+  'Second Message',
+  'Hello John Smith'
+]
+for await (let buf of encoder(list)) {
+  console.log('-', buf);
+}
+// Will print
+// - Uint8Array [
+//   70, 105, 114, 115, 116,
+//   32,  77, 101, 115, 115,
+//   97, 103, 101
+// ]
+// - Uint8Array [
+//    72, 101, 108, 108,
+//   111,  32, 119, 111,
+//   114, 108, 100
+// ]
+// - Uint8Array [
+//    83, 101,  99, 111, 110,
+//   100,  32,  77, 101, 115,
+//   115,  97, 103, 101
+// ]
+// - Uint8Array [
+//    72, 101, 108, 108, 111,
+//    32,  74, 111, 104, 110,
+//    32,  83, 109, 105, 116,
+//   104
+// ]
+```
+
 `filter` method
 ---------------
 
@@ -166,6 +242,72 @@ for await (let item of filter(list, (v, i) => i % 2 === 0)) {
 // - item-2
 // - item-4
 // - item-6
+```
+
+`lines`
+-------
+
+Transform sequence of strings to sequence of lines - it splits strings
+by '\r' and '\n' symbols and returns individual lines;
+
+This method accepts the following parameters:
+* generator - asynchronous generator providing inidvidual strings
+
+It returns an asynchronous generator yielding lines.
+
+
+Example:
+
+```javascript
+const { lines } = require('@agen/utils');
+const list = [
+  'first line\nsecond ',
+  'line\nthird line\nfou',
+  'rth li',
+  'ne\nfifth line',
+]
+for await (let line of lines(list)) {
+ console.log('-', line);
+}
+// Will print
+// - first line
+// - second line
+// - third line
+// - fourth line
+// - fifth line
+```
+
+`fixedSize`
+-----------
+
+This method transforms a sequence of arrays of different sizes to arrays of the
+same size.
+This method accepts the following parameters:
+* generator - asynchronous generator providing inidvidual elements
+* Type - type of the returned arrays
+* size - size of returned arrays
+
+It returns an asynchronous generator providing element batches (arrays)  
+of the fixed size.
+
+See also the `batch` method. The `batch` method groups individual items in
+arrays while `fixedSize` accepts arrays of diffent sizes and align them
+to the specified sizes.
+
+Example:
+```javascript
+
+const { fixedSize } = require('@agen/utils');
+const list = ['hello', 'world'];
+const chunkLen = 3;
+for await (let chunk of fixedSize(list, Array, chunkLen)) {
+  console.log('* ', chunk)
+}
+// Will print
+// *  [ 'h', 'e', 'l' ]
+// *  [ 'l', 'o', 'w' ]
+// *  [ 'o', 'r', 'l' ]
+// *  [ 'd' ]
 ```
 
 `map` method

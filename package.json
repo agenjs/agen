@@ -17,7 +17,6 @@
   "scripts": {
     "postinstall": "lerna bootstrap --hoist",
     "bootstrap": "lerna exec npm install",
-    "test": "lerna exec --concurrency 1 -- npm test",
-    "postpublish": "git push && git push --tags && git commit -m \"${npm_package_name} ${npm_package_version}\" && git push"
+    "test": "lerna exec --concurrency 1 -- npm test"
   }
 }
