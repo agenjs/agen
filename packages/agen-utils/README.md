@@ -110,6 +110,77 @@ for await (let chunk of chunks(list, begin, end)) {
 ```
 
 
+`decoder`
+---------
+This method decodes buffer to string. It accept sequence of buffers and returns
+the corresponding decoded strings. Internally it uses standard TextDecoder
+class. It accepts two parameters:
+* generator - async generator providing binary arrays (buffers)
+* enc - optional encoding for strings in binaries
+
+Example: transforming binary arrays to strings
+```javascript
+const { decoder } = require('@agen/utils');
+const list = [
+  Uint8Array.from([ 70, 105, 114, 115, 116, 32,  77, 101, 115, 115, 97, 103, 101 ]),
+  Uint8Array.from([ 72, 101, 108, 108, 111,  32, 119, 111, 114, 108, 100 ]),
+  Uint8Array.from([ 83, 101,  99, 111, 110, 100,  32,  77, 101, 115, 115,  97, 103, 101 ]),
+  Uint8Array.from([ 72, 101, 108, 108, 111, 32,  74, 111, 104, 110, 32,  83, 109, 105, 116, 104 ])
+]
+for await (let item of decoder(list, 'UTF-8')) {
+  console.log('-', item);
+}
+// Will print
+// - First Message
+// - Hello world
+// - Second Message
+// - Hello John Smith
+```
+
+`encoder`
+---------
+This method transforms sequence of strings to corresponding binary string
+representation. Strings are always encoded with UTF-8.
+It accepts one parameters:
+* generator - async generator providing strings to encode
+The returned generator yields binary string representation.
+
+Example: strings to binary arrays
+```javascript
+const { encoder } = require('@agen/utils');
+const list = [
+  'First Message',
+  'Hello world',
+  'Second Message',
+  'Hello John Smith'
+]
+for await (let buf of encoder(list)) {
+  console.log('-', buf);
+}
+// Will print
+// - Uint8Array [
+//   70, 105, 114, 115, 116,
+//   32,  77, 101, 115, 115,
+//   97, 103, 101
+// ]
+// - Uint8Array [
+//    72, 101, 108, 108,
+//   111,  32, 119, 111,
+//   114, 108, 100
+// ]
+// - Uint8Array [
+//    83, 101,  99, 111, 110,
+//   100,  32,  77, 101, 115,
+//   115,  97, 103, 101
+// ]
+// - Uint8Array [
+//    72, 101, 108, 108, 111,
+//    32,  74, 111, 104, 110,
+//    32,  83, 109, 105, 116,
+//   104
+// ]
+```
+
 `filter` method
 ---------------
 
