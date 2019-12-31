@@ -23,16 +23,21 @@ OR:
 import { * as utils } from '@agen/utils';
 ```
 
-`batch` method
---------------
+`batch`
+-------
 
+This method transforms a sequence of individual items to "batches" (arrays)
+of the specified size.
 This method accepts the following parameters:
 * generator - asynchronous generator providing inidvidual elements
 * batchSize - size of returned batches; default value is 10
 
 It returns an asynchronous generator providing element batches (arrays)  
-of the specified  size.
+of the specified size.
 
+See also the `fixedSize` method. The `batch` method groups individual items in
+arrays while `fixedSize` accepts arrays of diffent sizes and align them
+to the specified sizes.
 
 Example:
 ```javascript
@@ -270,6 +275,39 @@ for await (let line of lines(list)) {
 // - third line
 // - fourth line
 // - fifth line
+```
+
+`fixedSize`
+-----------
+
+This method transforms a sequence of arrays of different sizes to arrays of the
+same size.
+This method accepts the following parameters:
+* generator - asynchronous generator providing inidvidual elements
+* Type - type of the returned arrays
+* size - size of returned arrays
+
+It returns an asynchronous generator providing element batches (arrays)  
+of the fixed size.
+
+See also the `batch` method. The `batch` method groups individual items in
+arrays while `fixedSize` accepts arrays of diffent sizes and align them
+to the specified sizes.
+
+Example:
+```javascript
+
+const { fixedSize } = require('@agen/utils');
+const list = ['hello', 'world'];
+const chunkLen = 3;
+for await (let chunk of fixedSize(list, Array, chunkLen)) {
+  console.log('* ', chunk)
+}
+// Will print
+// *  [ 'h', 'e', 'l' ]
+// *  [ 'l', 'o', 'w' ]
+// *  [ 'o', 'r', 'l' ]
+// *  [ 'd' ]
 ```
 
 `map` method
