@@ -239,6 +239,39 @@ for await (let item of filter(list, (v, i) => i % 2 === 0)) {
 // - item-6
 ```
 
+`lines`
+-------
+
+Transform sequence of strings to sequence of lines - it splits strings
+by '\r' and '\n' symbols and returns individual lines;
+
+This method accepts the following parameters:
+* generator - asynchronous generator providing inidvidual strings
+
+It returns an asynchronous generator yielding lines.
+
+
+Example:
+
+```javascript
+const { lines } = require('@agen/utils');
+const list = [
+  'first line\nsecond ',
+  'line\nthird line\nfou',
+  'rth li',
+  'ne\nfifth line',
+]
+for await (let line of lines(list)) {
+ console.log('-', line);
+}
+// Will print
+// - first line
+// - second line
+// - third line
+// - fourth line
+// - fifth line
+```
+
 `map` method
 ------------
 

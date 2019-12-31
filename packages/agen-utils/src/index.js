@@ -4,6 +4,7 @@ export * from './decoder';
 export * from './encoder';
 export * from './filter';
 export * from './getIterator';
+export * from './lines';
 export * from './map';
 export * from './range';
 export * from './withIterators';
