@@ -1,55 +1,22 @@
-import { GetterSetterBuilder } from './GetterSetterBuilder';
-
-function getHandler(handler) {
-  if (typeof handler === 'string') handler = { field : handler };
-  if (typeof handler === 'function') handler = { set : handler };
-  if (typeof handler !== 'object') return null;
-  if (typeof handler.set !== 'function' && handler.field) {
-    const b = new GetterSetterBuilder();
-    handler.set = b.newSetter(handler.field);
-  }
-  if (handler.split) {
-    const delimiter = typeof handler.split !== 'boolean'
-      ? handler.split
-      : /\s*[;,]\s*/gim;
-    handler.process = (v) => ('' + v).split(delimiter);
-  }
-  if (typeof handler.process !== 'function') handler.process = (v)=>v;
-  return handler;
-}
+import { newHeaderHandlers } from './headerHandlers';
 
 export async function* jsonFromArrays(provider, options = {}) {
-  let { headersLine = 0, dataLine = 1, mapping } = options;
-  let headers;
-  let line = 0;
-  if (!!mapping && typeof mapping === 'object') {
-    const m = mapping;
-    mapping = (f) => m[f];
-  } else if (typeof mapping !== 'function') {
-    mapping = (f) => f;
-  }
+  let { headers, headersLine = 0, dataLine = 0, mapping } = options;
+  let handlers;
+  if (headers) handlers = newHeaderHandlers(headers, mapping);
+  if (!headers && !dataLine) dataLine = headersLine + 1;
+  let line = -1;
   for await (let data of provider) {
+    line++;
     if (!data) continue ;
-    if (line === headersLine) {
-        headers = [];
-        for (let i = 0; i < data.length; i++) {
-          let field = data[i];
-          field = mapping(field);
-          if (!field) continue;
-          let handler = getHandler(field);
-          if (handler) {
-            headers.push(Object.assign({}, handler, { index : i }));
-          }
-        }
-      } else if (headers && line >= dataLine) {
-        let obj = {};
-        for (let i = 0; i < headers.length; i++) {
-          const h = headers[i];
-          const value = h.process(data[h.index]);
-          h.set(obj, value);
-        }
-        yield obj;
+    if (!handlers && line === headersLine) {
+      handlers = newHeaderHandlers(data, mapping);
+    } else if (handlers && line >= dataLine) {
+      let obj;
+      for (let i = 0; i < handlers.length; i++) {
+        obj = handlers[i](obj, data, line);
       }
-      line++;
+      if (obj !== undefined) yield obj;
     }
+  }
 }
