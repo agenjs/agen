@@ -25,7 +25,7 @@
     "rollup": "../../node_modules/rollup/dist/bin/rollup -c",
     "test": "../../node_modules/mocha/bin/mocha -R spec ./test/index.js && npm run eslint",
     "pretest": "npm run rollup",
-    "postinstall": "npm run rollup",
+    "prepare": "npm run rollup",
     "prepublishOnly": "rm -rf dist && npm test",
     "postpublish": "zip -j dist/agen-stream.zip -- ../../LICENSE README.md dist/agen-stream.js dist/agen-stream.min.js"
   },
