@@ -1,3 +1,5 @@
+import { getGlobal, setGlobal } from '@agen/ns';
+
 export class Observer {
   constructor(...args) {
     this.obj = (typeof args[0] === 'function')
@@ -9,7 +11,8 @@ export class Observer {
   error(err) { return this._handle('error', err, true); }
   complete() { return this._handle('complete', undefined, true); }
   _handle(method, arg, done) {
-    if (this.removed) return ;
+    if (this.done) return ;
+    this.done = done;
     let handled = false;
     try {
       const m = this.obj[method];
@@ -18,8 +21,7 @@ export class Observer {
       return result;
     } finally {
       if (!handled || done) {
-        this.removed = true;
-        if (typeof this.unsubscribe === 'function') this.unsubscribe();
+        if (typeof this._unsubscribe === 'function') this._unsubscribe();
       }
     }
   }
@@ -29,7 +31,10 @@ export class Observable {
   constructor(subscribe) { this._subscribe = subscribe; }
   subscribe(...args) {
     const o = new Observer(...args);
-    o.unsubscribe = this._subscribe(o);
+    o._unsubscribe = this._subscribe(o);
     return { unsubscribe : (e) => (e ? o.error(e) : o.complete()) };
   }
 }
+
+
+if (getGlobal('Observable') === undefined) setGlobal('Observable', Observable);

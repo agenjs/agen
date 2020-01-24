@@ -1,6 +1,13 @@
 const expect = require('expect.js');
 const { encoder, decoder } = require('..');
 
+if (typeof TextEncoder === 'undefined' || typeof TextDecoder === 'undefined') {
+  const { getGlobal, setGlobal } = require('@agen/ns');
+  const util = require('util');
+  setGlobal('TextEncoder', util.TextEncoder);
+  setGlobal('TextDecoder', util.TextDecoder);
+}
+
 describe('encoding/decoding', async () => {
 
     test('');

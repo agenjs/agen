@@ -3,11 +3,11 @@ const { observe, subscribe } = require('..');
 const toAsyncGenerator = require('./toAsyncGenerator');
 const timeout = require('./timeout');
 
-describe('subscribe', async () => {
+module.exports = async () => {
 
   const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-  it (`should be able to transform async generator to observer`, async () => {
+  it (`subscribe: should be able to transform async generator to observer`, async () => {
     let values = [], resolve, reject;
     const promise = new Promise((y, n) => (resolve = y, reject = n));
     const h = subscribe(toAsyncGenerator(list), {
@@ -22,7 +22,7 @@ describe('subscribe', async () => {
     expect(values).to.eql(list);
   })
 
-  it (`should be able to transform sync generator to observer`, async () => {
+  it (`subscribe: should be able to transform sync generator to observer`, async () => {
     let started = false, finished = false, error, values = [];
     const h = subscribe(list, {
       next(v) { started = true; values.push(v); },
@@ -39,7 +39,7 @@ describe('subscribe', async () => {
     expect(error).to.be(undefined);
   })
 
-  it (`should be able to transform generator to observer`, async () => {
+  it (`subscribe: should be able to transform generator to observer`, async () => {
     let started = false, finished = false;
     const gen = observe((observer) => {
       const asyncGenerator = toAsyncGenerator(list);
@@ -63,4 +63,4 @@ describe('subscribe', async () => {
     expect(finished).to.be(true);
   })
 
-});
+}

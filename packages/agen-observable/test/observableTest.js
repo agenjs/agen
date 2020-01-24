@@ -3,11 +3,11 @@ const { observe } = require('..');
 const toAsyncGenerator = require('./toAsyncGenerator');
 const timeout = require('./timeout');
 
-describe('observer', async () => {
+module.exports = async () => {
 
   const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-  it (`should be able notify about all sync events without waiting the return; no timeouts`, async () => {
+  it (`observer: should be able notify about all sync events without waiting the return; no timeouts`, async () => {
     let finished = false;
     const gen = observe(async (observer) => {
       (async() => {
@@ -30,7 +30,7 @@ describe('observer', async () => {
     expect(finished).to.be(true);
   })
 
-  it (`should be able notify about all sync events without waiting the return; there is a timeout in the consumer`, async () => {
+  it (`observer: should be able notify about all sync events without waiting the return; there is a timeout in the consumer`, async () => {
     let finished = false, end = false;
     const gen = observe(async (observer) => {
       (async() => {
@@ -55,7 +55,7 @@ describe('observer', async () => {
     expect(finished).to.be(true);
   })
 
-  it (`should be able to transform individual events to an async generator`, async () => {
+  it (`observer: should be able to transform individual events to an async generator`, async () => {
     let started = false, finished = false;
     const gen = observe(async (observer) => {
       (async() => {
@@ -82,7 +82,7 @@ describe('observer', async () => {
     }
   })
 
-  it (`should be able to wait until the observer return the control`, async () => {
+  it (`observer: should be able to wait until the observer return the control`, async () => {
     const gen = observe(async (observer) => {
       (async() => {
         try {
@@ -105,7 +105,7 @@ describe('observer', async () => {
     }
   })
 
-  it (`should be able to call a sync cleanup method`, async () => {
+  it (`observer: should be able to call a sync cleanup method`, async () => {
     let finished = false;
     const gen = observe((observer) => {
       (async() => {
@@ -129,7 +129,7 @@ describe('observer', async () => {
     expect(finished).to.be(true);
   })
 
-  it (`should be able to call an async cleanup method`, async () => {
+  it (`observer: should be able to call an async cleanup method`, async () => {
     let finished = false;
     const gen = observe((observer) => {
       (async() => {
@@ -157,7 +157,7 @@ describe('observer', async () => {
   })
 
 
-  it (`should be able to rise errors`, async () => {
+  it (`observer: should be able to rise errors`, async () => {
     let error;
     const gen = observe(async (observer) => {
       observer.error('Hello, there!');
@@ -184,7 +184,7 @@ describe('observer', async () => {
     expect(error).to.eql('Hello, there!');
   })
 
-  it (`should be able to rise errors after some iterations`, async () => {
+  it (`observer: should be able to rise errors after some iterations`, async () => {
     let error;
     const gen = observe(async (observer) => {
       observer.next(list[0]);
@@ -205,7 +205,7 @@ describe('observer', async () => {
   })
 
 
-  it (`should be able to rise errors after some async iterations`, async () => {
+  it (`observer: should be able to rise errors after some async iterations`, async () => {
     let error;
     const gen = observe(async (observer) => {
       observer.next(list[0]);
@@ -229,7 +229,7 @@ describe('observer', async () => {
   })
 
 
-  it (`should be able to call an async cleanup method after errors`, async () => {
+  it (`observer: should be able to call an async cleanup method after errors`, async () => {
     let finished = false;
     const gen = observe(async (observer) => {
       (async() => {
@@ -261,4 +261,4 @@ describe('observer', async () => {
     // expect(finished).to.be(true);
   })
 
-});
+}

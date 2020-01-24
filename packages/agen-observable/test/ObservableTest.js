@@ -1,13 +1,16 @@
 const expect = require('expect.js');
-const { Observable, observableToGenerator } = require('..');
+const { getGlobal } = require('@agen/ns');
+const { observableToGenerator } = require('..');
+
+const Observable = getGlobal('Observable');
 const toAsyncGenerator = require('./toAsyncGenerator');
 const timeout = require('./timeout');
 
-describe('Observable', async () => {
+module.exports = async (Observable) => {
 
   const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-  it (`should be able to notify all sync values`, async () => {
+  it (`Observable: should be able to notify all sync values`, async () => {
     let finished = false;
     const observable = new Observable((observer) => {
       try {
@@ -21,13 +24,14 @@ describe('Observable', async () => {
       finished = true;
     })
     const values = [];
+    let resolve, promise = new Promise((r) => resolve = r);
     let counter = 0, error, done;
     observable.subscribe({
       next(v) { values.push(v); },
-      error(e) { error = e; done = true; },
-      complete() { done = true; }
+      error(e) { error = e; done = true; resolve(); },
+      complete() { done = true; resolve(); }
     })
-
+    await promise;
     expect(values).to.eql(list);
     expect(finished).to.be(true);
     expect(done).to.be(true);
@@ -35,7 +39,7 @@ describe('Observable', async () => {
   })
 
 
-  it (`should be able to notify all async values`, async () => {
+  it (`Observable: should be able to notify all async values`, async () => {
     let finished = false;
     const observable = new Observable((observer) => {
       (async() => {
@@ -64,7 +68,7 @@ describe('Observable', async () => {
     expect(error).to.be(undefined);
   })
 
-  it (`should be able to subscribe with functions`, async () => {
+  it (`Observable: should be able to subscribe with functions`, async () => {
     let finished = false;
     const observable = new Observable((observer) => {
       try {
@@ -78,12 +82,14 @@ describe('Observable', async () => {
       finished = true;
     })
     const values = [];
+    let resolve, promise = new Promise((r) => resolve = r);
     let counter = 0, error, done;
     observable.subscribe(
       (v) => values.push(v),
-      (e) => { error = e; done = true; },
-      () => done = true
+      (e) => { error = e; done = true; resolve(); },
+      () => { done = true; resolve(); }
     );
+    await promise;
 
     expect(values).to.eql(list);
     expect(finished).to.be(true);
@@ -91,14 +97,8 @@ describe('Observable', async () => {
     expect(error).to.be(undefined);
   })
 
-});
 
-
-describe('observableToGenerator', async () => {
-
-  const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-  it (`should be able iterate over all values provided synchroniously`, async () => {
+  it (`Observable: should be able iterate over all values provided synchroniously`, async () => {
     let finished = false;
     const observable = new Observable((observer) => {
       try {
@@ -121,7 +121,7 @@ describe('observableToGenerator', async () => {
     expect(finished).to.be(true);
   })
 
-  it (`should be able iterate over all values provided asynchroniously`, async () => {
+  it (`Observable: should be able iterate over all values provided asynchroniously`, async () => {
     let finished = false;
     const observable = new Observable((observer) => {
       (async() => {
@@ -146,4 +146,4 @@ describe('observableToGenerator', async () => {
     expect(finished).to.be(true);
   })
 
-});
+}

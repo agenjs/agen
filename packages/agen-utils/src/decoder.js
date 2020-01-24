@@ -1,3 +1,5 @@
+import { getGlobal } from '@agen/ns';
+
 /**
  * Transforms sequence of buffers or int arrays to a sequence of decoded strings.
  * @param provider async generator providing buffers
@@ -5,6 +7,7 @@
  * @return an async generator providing decoded strings
  */
 export async function* decoder(provider, enc = 'UTF-8') {
+  const TextDecoder = getGlobal('TextDecoder');
   const decoder = new TextDecoder(enc);
   for await (let chunk of provider) {
     yield decoder.decode(chunk, { stream : true });
