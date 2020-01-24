@@ -15,6 +15,8 @@ List of methods:
   on the corresponding iterators
 * `series` - splits sequence of items to sequence of async generators using
   a specified method defining the end of the previous serie.
+* `encoder` - decodes buffers to string
+* `encoder` - transforms sequence of strings to corresponding binary representation
 
 Example:
 ```javascript

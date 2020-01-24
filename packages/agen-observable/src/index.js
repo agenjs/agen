@@ -3,3 +3,4 @@ export * from './subscribe';
 export * from './merge';
 export * from './Observable';
 export * from './observableToGenerator';
+export * from './toObservable';

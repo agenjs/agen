@@ -1,5 +1,5 @@
 {
-  "name": "@agen/utils",
+  "name": "@agen/ns",
   "version": "0.3.1",
   "description": "Utility methods for async generators",
   "keywords": [],
@@ -8,9 +8,9 @@
     "name": "Mikhail Kotelnikov",
     "email": "mikhail.kotelnikov@gmail.com"
   },
-  "main": "dist/agen-utils.js",
-  "unpkg": "dist/agen-utils.min.js",
-  "jsdelivr": "dist/agen-utils.min.js",
+  "main": "dist/agen-ns.js",
+  "unpkg": "dist/agen-ns.min.js",
+  "jsdelivr": "dist/agen-ns.min.js",
   "module": "src/index.js",
   "repository": {
     "type": "git",
@@ -27,10 +27,7 @@
     "pretest": "npm run rollup",
     "prepare": "npm run rollup",
     "prepublishOnly": "rm -rf dist && npm test",
-    "postpublish": "zip -j dist/agen-utils.zip -- ../../LICENSE README.md dist/agen-utils.js dist/agen-utils.min.js"
-  },
-  "dependencies": {
-    "@agen/ns": "^0.3.1"
+    "postpublish": "zip -j dist/agen-ns.zip -- ../../LICENSE README.md dist/agen-ns.js dist/agen-ns.min.js"
   },
   "license": "MIT",
   "sideEffects": false,
