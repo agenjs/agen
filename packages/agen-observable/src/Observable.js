@@ -1,5 +1,3 @@
-import { getGlobal, setGlobal } from '@agen/ns';
-
 export class Observer {
   constructor(...args) {
     this.obj = (typeof args[0] === 'function')
@@ -35,6 +33,3 @@ export class Observable {
     return { unsubscribe : (e) => (e ? o.error(e) : o.complete()) };
   }
 }
-
-
-if (getGlobal('Observable') === undefined) setGlobal('Observable', Observable);
