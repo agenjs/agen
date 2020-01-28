@@ -1,0 +1,43 @@
+{
+  "name": "@agen/gzip",
+  "version": "0.4.0",
+  "description": "Utility methods to gzip/gunzip binary blocks",
+  "keywords": [],
+  "homepage": "https://github.com/mkotelnikov/agen",
+  "author": {
+    "name": "Mikhail Kotelnikov",
+    "email": "mikhail.kotelnikov@gmail.com"
+  },
+  "main": "dist/agen-gzip.js",
+  "unpkg": "dist/agen-gzip.min.js",
+  "jsdelivr": "dist/agen-gzip.min.js",
+  "module": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkotelnikov/agen/agen.git"
+  },
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "eslint": "../../node_modules/eslint/bin/eslint.js src",
+    "rollup": "../../node_modules/rollup/dist/bin/rollup -c",
+    "test": "../../node_modules/mocha/bin/mocha -R spec ./test/index.js && npm run eslint",
+    "pretest": "npm run rollup",
+    "prepare": "npm run rollup",
+    "prepublishOnly": "rm -rf dist && npm test",
+    "postpublish": "zip -j dist/agen-gzip.zip -- ../../LICENSE README.md dist/agen-gzip.js dist/agen-gzip.min.js"
+  },
+  "dependencies": {
+    "@agen/observable": "^0.4.0"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "pako": "^1.0.10"
+  }
+}
