@@ -1,6 +1,6 @@
 {
   "name": "@agen/observable",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Observables to async generators",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
@@ -30,7 +30,7 @@
     "postpublish": "zip -j dist/agen-observable.zip -- ../../LICENSE README.md dist/agen-observable.js dist/agen-observable.min.js"
   },
   "dependencies": {
-    "@agen/ns": "^0.4.0"
+    "@agen/ns": "^0.5.0"
   },
   "license": "MIT",
   "sideEffects": false,
