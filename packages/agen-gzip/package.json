@@ -1,6 +1,6 @@
 {
   "name": "@agen/gzip",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Utility methods to gzip/gunzip binary blocks",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
@@ -28,9 +28,6 @@
     "prepare": "npm run rollup",
     "prepublishOnly": "rm -rf dist && npm test",
     "postpublish": "zip -j dist/agen-gzip.zip -- ../../LICENSE README.md dist/agen-gzip.js dist/agen-gzip.min.js"
-  },
-  "dependencies": {
-    "@agen/observable": "^0.5.0"
   },
   "license": "MIT",
   "sideEffects": false,
