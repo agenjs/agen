@@ -1,6 +1,6 @@
 {
   "name": "@agen/gzip",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Utility methods to gzip/gunzip binary blocks",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",

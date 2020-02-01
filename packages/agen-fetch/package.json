@@ -1,6 +1,6 @@
 {
   "name": "@agen/fetch",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Tranforms fetch to async generators of blocks",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
@@ -30,7 +30,7 @@
     "postpublish": "zip -j dist/agen-fetch.zip -- ../../LICENSE README.md dist/agen-fetch.js dist/agen-fetch.min.js"
   },
   "dependencies": {
-    "@agen/ns": "^0.5.1"
+    "@agen/ns": "^0.5.2"
   },
   "license": "MIT",
   "sideEffects": false,

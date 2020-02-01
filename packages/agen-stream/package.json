@@ -1,6 +1,6 @@
 {
   "name": "@agen/stream",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Transforms streams from/to async generators",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
@@ -31,7 +31,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@agen/observable": "^0.5.1"
+    "@agen/observable": "^0.5.2"
   },
   "sideEffects": false,
   "publishConfig": {
