@@ -6,6 +6,8 @@ List of methods:
 * `batch` - transforms sequence of items to arrays of the specified size
 * `chunks` - transforms sequence of items to series of async generators using
   provided "begin" and "end" methods defining start and end of each chunk
+* `combine` - combine all values provided by multiple async generators and
+  yields arrays of results
 * `filter` - removes some values from the parent iterator
 * `getIterator` - returns an iterator for objects implementing iterable protocol
 * `map` - transforms items from the parent async generator to new values
@@ -116,6 +118,38 @@ for await (let chunk of chunks(list, begin, end)) {
 // * item-7
 ```
 
+`combine` method
+----------------
+
+Combine all values provided by given generators and yields arrays of this values
+in all combinations.
+
+This method accepts a list of async generators and  returns an asynchronous
+generator yielding arrays of values.
+
+Example:
+```javascript
+
+const { combine } = require('@agen/utils');
+(async () => {
+  const gen = combine(
+    ['A', 'B', 'C'],
+    [1, 2, 3, 4, 5]
+  );
+  for await (let array of gen) {
+    console.log(array);
+  }  
+})();
+// Will print:
+// [ 'A', undefined ]
+// [ 'A', 1 ]
+// [ 'B', 1 ]
+// [ 'B', 2 ]
+// [ 'C', 2 ]
+// [ 'C', 3 ]
+// [ 'C', 4 ]
+// [ 'C', 5 ]
+```
 
 `decoder`
 ---------
