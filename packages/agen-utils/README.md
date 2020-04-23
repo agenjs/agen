@@ -8,8 +8,14 @@ List of methods:
   provided "begin" and "end" methods defining start and end of each chunk
 * `combine` - combine all values provided by multiple async generators and
   yields arrays of results
+* `decoder` - decodes buffers to string
+* `encoder` - transforms sequence of strings to corresponding binary representation
 * `filter` - removes some values from the parent iterator
+* `fixedSize` - transforms a sequence of arrays of different sizes to arrays
+  of the same size
 * `getIterator` - returns an iterator for objects implementing iterable protocol
+* `lines` - transforms sequence of strings (containing '\r' and '\n' symbols) to
+   a sequence of individual lines
 * `map` - transforms items from the parent async generator to new values
 * `range` - returns a new iteratator providing values from a specified range
   (ex: returns elements with the index in range [3..10]).
@@ -17,8 +23,6 @@ List of methods:
   on the corresponding iterators
 * `series` - splits sequence of items to sequence of async generators using
   a specified method defining the end of the previous serie.
-* `encoder` - decodes buffers to string
-* `encoder` - transforms sequence of strings to corresponding binary representation
 
 Example:
 ```javascript
