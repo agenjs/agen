@@ -405,3 +405,40 @@ for await (let item of range(list, 1, 3) {
 // - d
 
 ```
+
+`slicer`
+--------
+
+This method returns a new function providing async iterators over the specified
+byte range of the data.
+
+Parameters:
+* `provider` - async generator providing data blocks
+* `slice` - function returning a new block of the given length with the range
+  of bytes starting from the specified buffer offset  
+* `length` - function providing the length of the given buffer; default
+  implementation checks the "byteLength" or "length" properties
+
+
+Example:
+
+```javascript
+const { slicer } = require('@agen/utils');
+// List of blocks. It can be an async generator as well.
+const list = ['a', 'b', 'c', 'd', 'e', 'f']
+const f = slicer(list);
+let result = [];
+for await (let s of f(3)) {
+  result.push(s);
+}
+// Will print the first 3 bytes: ['a', 'b', 'c']
+console.log('-', result);
+
+result = [];
+for await (let s of f(2)) {
+  result.push(s);
+}
+// Will print next 2 bytes: ['d', 'e']
+console.log('-', result);
+
+```
