@@ -6,5 +6,6 @@ require('./filterTest');
 require('./fixedSizeTest');
 require('./linesTest');
 require('./mapTest');
-require('./rangeTest');
 require('./seriesTest');
+require('./slicerTest');
+require('./rangeTest');

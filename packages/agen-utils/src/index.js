@@ -9,5 +9,6 @@ export * from './getIterator';
 export * from './lines';
 export * from './map';
 export * from './range';
-export * from './withIterators';
 export * from './series';
+export * from './slicer';
+export * from './withIterators';
