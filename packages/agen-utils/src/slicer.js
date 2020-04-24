@@ -10,31 +10,45 @@ import { getIterator } from './getIterator';
  * default implementation checks the "byteLength" or "length" properties.
  */
 export function slicer(provider, slice, length) {
-  slice = slice || ((block, offset, len) => {
-    if (offset === 0 && len === block.length) return block;
+  length = length || ((block) => block.byteLength || block.length || 0);
+  slice = slice || ((block, offset, len, blockLen) => {
+    if (offset === 0 && len === blockLen) return block;
     return block.slice
       ? block.slice(offset, offset + len)
       : block.substring(offset, offset + len);
   })
-  length = length || ((block) => block.byteLength || block.length || 0);
-  let prevBlock, prevBlockLen = -1, shift = 0, it;
-  return async function*(len) {
-    if (!it) it = await getIterator(provider);
-    let index = 0;
-    while (index < len) {
-      if ((index < len) && (shift < prevBlockLen)) {
-        let blockLen = Math.min(len - index, prevBlockLen - shift);
-        const block = slice(prevBlock, shift, blockLen);
-        shift += blockLen;
-        index += blockLen;
-        yield block;
+  let block, blockLen = -1, it;
+  return async function*(getSplitIndex) {
+    if (typeof getSplitIndex !== 'function') {
+      let len = getSplitIndex;
+      getSplitIndex = (block, blockLen) => {
+        const index = Math.min(len, blockLen);
+        len -= index;
+        return index;
       }
-      if (index >= len) break;
-      const slot = await it.next();
-      prevBlock = slot.value;
-      prevBlockLen = prevBlock ? length(prevBlock) : 0;
-      shift = 0;
-      if (slot.done) break;
+    }
+    if (!it) it = await getIterator(provider);
+    while (true) {
+      if (!block) {
+        const slot = await it.next();
+        if (slot.done || !slot.value) break;
+        block = slot.value;
+        blockLen = length(block);
+      }
+      const splitIndex = getSplitIndex(block, blockLen);
+      if (splitIndex === 0) { break; }
+      else if (splitIndex > 0 && splitIndex < blockLen) {
+        const chunk = slice(block, 0, splitIndex, blockLen);
+        const n = blockLen - splitIndex;
+        block = slice(block, splitIndex, n, blockLen);
+        blockLen = n;
+        yield chunk;
+        break;
+      } else {
+        yield block;
+        block = null;
+        blockLen = -1;
+      }
     }
   }
 }

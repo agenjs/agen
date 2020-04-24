@@ -15,6 +15,16 @@ describe('slicer', function() {
       expect(await readString(f, 8)).to.eql('ghijk');
     })
 
+    it(`should return specified range of chars from a single string`, async () => {
+      const list = ['abcdefghijk'];
+      const f = slicer(list, sliceStr);
+      expect(await readString(f, 2)).to.eql('ab');
+      expect(await readString(f, 3)).to.eql('cde');
+      expect(await readString(f, 1)).to.eql('f');
+      // Only 5 bytes still available
+      expect(await readString(f, 8)).to.eql('ghijk');
+    })
+
     it(`custom slicer: should return specified range of chars from a block`, async () => {
       const list = ['abc', 'defg', 'hijk'];
       const f = slicer(list, sliceStr);
