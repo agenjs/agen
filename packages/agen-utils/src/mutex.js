@@ -1,11 +1,12 @@
 export function newMutex() {
-  let promise, closed = false;
+  let promise, notify, closed = false;
   return {
     get promise() { return promise; },
-    unlock(close) { closed |= !(!close); },
+    close() { closed = true; notify && notify(); },
+    unlock() { if (notify) notify(); },
     async lock() {
       await promise;
-      !closed && (promise = new Promise(n => this.unlock = n));
+      !closed && (promise = new Promise(n => notify = n));
     }
   }
 }
@@ -21,8 +22,8 @@ export function newMutexPair() {
       first.unlock();
       await second.lock();
     }, async () => {
-      first.unlock(true);
-      second.unlock(true);
+      first.close();
+      second.close();
       await Promise.all([first.promise, second.promise]);
     }
   ];
