@@ -9,7 +9,7 @@ export async function* lines(provider) {
     buffer += chunk;
     const lines = buffer.split(/\r?\n/);
     buffer = lines.pop();
-    yield* lines;
+    while (lines.length) yield lines.shift();
   }
   if (buffer !== undefined) yield buffer;
 }

@@ -6,7 +6,7 @@ export async function* withIterators(providers, action) {
     iterators[i] = await getIterator(providers[i]);
   }
   try {
-    yield* action(iterators);
+    for await (let item of action(iterators)) yield item;
     for (let i = 0; i < iterators.length; i++) {
       const it = iterators[i];
       if (it.return) it.return();
