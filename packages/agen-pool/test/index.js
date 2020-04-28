@@ -22,13 +22,13 @@ describe('pool', async () => {
       const gen = sync ? list : toAsyncGenerator(list);
       const maxTimeout = 100;
       let currentPoolSize = 0;
-      const action = async (m) => {
+      const action = async function*(m) {
         currentPoolSize++;
         // console.log('I AM HERE', m, currentPoolSize);
         expect(currentPoolSize <= poolSize).to.be(true);
         await timeout(Math.round(maxTimeout * Math.random()));
         currentPoolSize--;
-        return m;
+        yield m;
       }
       const result = [];
       for await (let n of pool(gen, action, poolSize)) {

@@ -10,8 +10,9 @@ export async function* pool(provider, action, poolSize = 1) {
           if (stop) break;
           let promise = (async (i) => {
             try {
-              const result = await action(i);
-              observer.next(result);
+              for await (let item of action(i)) {
+                observer.next(item);
+              }
             } catch (err) {
               observer.error(err);
             }
