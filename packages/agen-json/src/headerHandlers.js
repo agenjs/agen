@@ -1,6 +1,6 @@
 import { GetterSetterBuilder } from './GetterSetterBuilder';
 
-export function newHeaderHandler(header, index) {
+export function newHeaderHandler(header, index, field) {
   if (!header) return ;
   if (typeof header === 'string') header = { index, field : header };
   if (typeof header === 'function') header = { index, set : header };
@@ -13,13 +13,19 @@ export function newHeaderHandler(header, index) {
     const delimiter = typeof header.split !== 'boolean'
       ? header.split
       : /\s*[;,]\s*/gim;
-    header.process = (v) => ('' + v).split(delimiter);
+    const split = (v) => String(v).split(delimiter);
+    if (header.process) {
+      const p = header.process;
+      header.process = (v, ...args) => p(split(v, ...args));
+    } else {
+      header.process = split;
+    }
   }
   if (typeof header.process !== 'function') header.process = (v)=>v;
   return (obj, data) => {
     obj = obj || {};
-    const value = header.process(data[index], index, data);
-    header.set(obj, value);
+    const value = header.process(data[index], index, data, field);
+    header.set(obj, value, field);
     return obj;
   }
 }
@@ -27,13 +33,13 @@ export function newHeaderHandler(header, index) {
 export function newHeaderHandlers(headers, mapping) {
   if (!!mapping && typeof mapping === 'object') {
     const m = mapping;
-    mapping = (f) => m[f];
+    mapping = (field) => m[field] || (('*' in m) ? m['*'] : { field });
   } else if (typeof mapping !== 'function') {
     mapping = (f) => f;
   }
   let handlers = [];
   for (let i = 0; i < headers.length; i++) {
-    let handler = newHeaderHandler(mapping(headers[i], i, headers), i);
+    let handler = newHeaderHandler(mapping(headers[i], i, headers), i, headers[i]);
     if (handler) { handlers.push(handler); }
   }
   return handlers;

@@ -67,6 +67,50 @@ describe('jsonFromArrays', async () => {
     expect(i).to.eql(control.length);
   })
 
+  it(`should transform an array to json objects with default handler function`, async () => {
+    const headers = ['firstName', 'lastName', 'age'];
+    const data = [
+      ['John', 'Smith', '35'],
+      ['James', 'Bond', '50']
+    ]
+    const control = [
+      { a : 'John', b : 'Smith', AGE : 35 },
+      { a : 'James', b : 'Bond', AGE : 50 },
+    ];
+    let i = 0;
+    const mapping = {
+      firstName : 'a',
+      lastName : 'b',
+      '*' : (o, v, field) => (o[field.toUpperCase()] = v)
+    }
+    for await (let obj of jsonFromArrays(data, { headers, mapping })) {
+      expect(obj).to.eql(control[i++]);
+    }
+    expect(i).to.eql(control.length);
+  })
+
+  it(`should transform an array to json objects with default handler function`, async () => {
+    const headers = ['firstName', 'lastName', 'age'];
+    const data = [
+      ['John', 'Smith', '35'],
+      ['James', 'Bond', '50']
+    ]
+    const control = [
+      { a : 'John', b : 'Smith', AGE : 35 },
+      { a : 'James', b : 'Bond', AGE : 50 },
+    ];
+    let i = 0;
+    const mapping = {
+      firstName : 'a',
+      lastName : 'b',
+      '*' : (o, v, field) => (o[field.toUpperCase()] = v)
+    }
+    for await (let obj of jsonFromArrays(data, { headers, mapping })) {
+      expect(obj).to.eql(control[i++]);
+    }
+    expect(i).to.eql(control.length);
+  })
+
   it(`should transform an array to json objects with a mapping function`, async () => {
     const headers = ['firstName', 'lastName', 'age'];
     const data = [
