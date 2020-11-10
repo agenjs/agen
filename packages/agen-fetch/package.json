@@ -1,6 +1,6 @@
 {
   "name": "@agen/fetch",
-  "version": "0.5.3",
+  "version": "0.5.8",
   "description": "Tranforms fetch to async generators of blocks",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
