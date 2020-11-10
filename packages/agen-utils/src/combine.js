@@ -17,6 +17,7 @@ export async function* combine(generators, reset) {
       } finally {
         if (reset) values[idx] = undefined;
         done++;
+        if (done === iterators.length) await close();
       }
     })
     try {

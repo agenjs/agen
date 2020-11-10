@@ -2,6 +2,7 @@ const expect = require('expect.js');
 const { combine } = require('..');
 
 describe('combine', function() {
+  // this.timeout(2500);
 
   it(`sync: should combine sequences of different sizes`, async () => await test([
     ['A1', 'A2', 'A3', 'A4', 'A5'],
@@ -112,7 +113,7 @@ describe('combine', function() {
      [ 7, 6, 40 ],
      [ 9, 6, 40 ],
      [ 9, 8, 40 ]
-  ], 30));
+  ], 10));
 
   async function test(list, control, timeout, reset) {
     const gen = combine(list, reset);
