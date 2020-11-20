@@ -6,6 +6,7 @@ export * from './encoder';
 export * from './filter';
 export * from './fixedSize';
 export * from './getIterator';
+export * from './iterate';
 export * from './lines';
 export * from './map';
 export * from './range';
