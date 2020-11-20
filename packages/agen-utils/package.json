@@ -1,6 +1,6 @@
 {
   "name": "@agen/utils",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "Utility methods for async generators",
   "keywords": [],
   "homepage": "https://github.com/mkotelnikov/agen",
