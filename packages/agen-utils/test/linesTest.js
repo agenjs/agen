@@ -9,6 +9,15 @@ describe('lines', async () => {
     await test(['a'], ['a']);
     await test(['a\n'], ['a', '']);
     await test(['a\nb'], ['a', 'b']);
+    await test([ 'first line\nsecond line' ], [
+      'first line',
+      'second line'
+    ]);
+    await test([ 'first line\nsecond line\n' ], [
+      'first line',
+      'second line',
+      ''
+    ]);
     await test([
       'first line\nsecond ',
       'line\n\nthird line\nfou',
