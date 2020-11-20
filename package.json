@@ -1,4 +1,5 @@
 {
+  "version": "0.5.8",
   "name": "@agen/root",
   "description": "Utilities for JavaScript asynchronous generators",
   "author": "Mikhail Kotelnikov <mikhail.kotelnikov@gmail.com>",
