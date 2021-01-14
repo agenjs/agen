@@ -35,6 +35,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "pako": "^1.0.10"
+    "pako": "^2.0.3"
   }
 }
