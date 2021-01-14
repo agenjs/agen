@@ -1,11 +1,11 @@
 import pako from 'pako';
 
-export async function* inflate(generator) {
-  yield* handle(generator, new pako.Inflate());
+export async function* inflate(generator, options={}) {
+  yield* handle(generator, new pako.Inflate(options));
 }
 
-export async function* deflate(generator) {
-  yield* handle(generator, new pako.Deflate());
+export async function* deflate(generator, options={}) {
+  yield* handle(generator, new pako.Deflate(options));
 }
 
 async function *handle(generator, f) {
