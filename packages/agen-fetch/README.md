@@ -6,7 +6,6 @@ to an async generator for data blocks.
 In browsers it uses the standard `fetch` method and `AbortController` class.
 In NodeJS environment the `node-fetch` and the `node-abort-controller`
 polyfills should be used (see example below).
-to implement the `fetchData` - a cancellable fetch.
 
 This package contains the following methods:
 * `fetchData` - returns an async iterator over binary blocks fetched from
@@ -14,7 +13,8 @@ This package contains the following methods:
 * `fetchWithAbort` - launches a globally available `fetch` method and
   returns the result with added `abort` method; it is implemented using
   globally available `AbortController` class (see below)
-
+* `handleFetchResults` - handles results returned by the `fetchWithAbort`
+  method and transforms them to an async iterator
 
 `fetchData`
 -----------
@@ -36,6 +36,15 @@ import { fetchData } from '@agen/fetch';
   }
 })();
 
+```
+
+Basically this method calls the `fetchWithAbort` and
+the `handleFetchResults` methods:
+```javascript
+async function* fetchData(url, params = {}) {
+  const res = await fetchWithAbort(url, params);
+  yield* handleFetchResults(res);
+}
 ```
 
 See below how to use this method in the NodeJS environment.
@@ -63,6 +72,31 @@ import { fetchWithAbort } from '@agen/fetch';
 
 See below how to use this method in the NodeJS environment.
 
+`handleFetchResults`
+-------------------
+
+This method transforms the response returned by the `fetchWithAbort` method
+to an AnyncGenerator. The example below shows the implementation of the
+`fetchData` method:
+
+```javascript
+
+import { fetchWithAbort, handleFetchResults } from '@agen/fetch';
+
+(async () => {
+
+  const url = 'http://localhost:8080/README.txt';
+  const res = await fetchWithAbort(url);
+  const it = handleFetchResults(res);
+  let text = '';
+  for await (let block of it) {
+    text += block.toString('UTF-8');
+  }
+  console.log(text);
+
+})();
+
+```
 
 Overloading `fetch` and `AbortController`
 -----------------------------------------
