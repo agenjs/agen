@@ -1,4 +1,4 @@
-import { getIterator } from './getIterator';
+import { getIterator } from './getIterator.js';
 
 /**
  * This method returns a new function providing async iterators

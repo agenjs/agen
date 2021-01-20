@@ -1,4 +1,4 @@
-import { getIterator } from './getIterator';
+import { getIterator } from './getIterator.js';
 /**
  * Splits sequence of items to multiple async iterators using the provided
  * "split" method.
