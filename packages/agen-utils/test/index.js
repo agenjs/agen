@@ -7,6 +7,7 @@ require('./fixedSizeTest');
 require('./iterateTest');
 require('./linesTest');
 require('./mapTest');
+require('./multiplexerTest.js');
 require('./seriesTest');
 require('./slicerTest');
 require('./rangeTest');
