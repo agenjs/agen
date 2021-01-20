@@ -1,4 +1,4 @@
-import { getIterator } from './getIterator';
+import { getIterator } from './getIterator.js';
 
 export async function* withIterators(providers, action) {
   const iterators = new Array(providers.length);

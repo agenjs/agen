@@ -1,4 +1,4 @@
-import { getIterator } from './getIterator';
+import { getIterator } from './getIterator.js';
 
 /**
  * Transforms the given sequence of items to a sequence of async providers.

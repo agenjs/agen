@@ -1,5 +1,5 @@
-import { withIterators } from './withIterators';
-import { newMutexPair } from './mutex';
+import { withIterators } from './withIterators.js';
+import { newMutexPair } from './mutex.js';
 
 export async function* combine(generators, reset) {
   const it = withIterators(generators, async function*(iterators) {
