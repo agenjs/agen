@@ -293,18 +293,21 @@ describe('rpc', async function() {
 
   describe('stubs with serialization/deserialization', () => {
 
+    const fromIterator = (stream, value) => {
+      return stream
+        ? (async function* () { yield* await value; })()
+        : (async function () { for await (let item of await value) { return item; } })()
+    }
+
     // Specific signature to universal signature (async*/async*)
     function serverCallsAdapter(getMethod) {
       return (methodInfo) => {
         const { requestStream, responseStream } = methodInfo;
         const method = getMethod(methodInfo);
         return (input) => (async function* () {
-          const params = requestStream
-            ? (async function* () { yield* input; })()
-            : (async function() { for await (let item of input){ return item; } })();
+          const params = fromIterator(requestStream, input);
           const response = await method(await params);
-          if (responseStream) { yield* response }
-          else { yield response; }
+          responseStream ? (yield* response) : (yield response);
         })();
       }
     }
@@ -316,9 +319,7 @@ describe('rpc', async function() {
         const method = getMethod(methodInfo);
         return (input) => {
           const response = method(requestStream ? input : [input]);
-          return !responseStream 
-            ? (async function() { for await (let message of response) return message; })()
-            : response;
+          return fromIterator(responseStream, response);
         }
       }
     }
@@ -326,21 +327,19 @@ describe('rpc', async function() {
 
     async function* map(it, map) { for await (let item of it) { yield map(item); } }
 
-    function toSerializedForm(getMethod, serd) {
+    function newCallsEncoder(getMethod, mapRequest, mapResponse) {
       return (methodInfo) => {
         const method = getMethod(methodInfo);
-        const encodeRequest = serd.newSerializer(methodInfo.requestType);
-        const decodeResponse = serd.newDeserializer(methodInfo.responseType);
-        return (request) => map(method(map(request, encodeRequest)), decodeResponse);
+        const encodeRequest = mapRequest(methodInfo.requestType);
+        const encodeResponse = mapResponse(methodInfo.responseType);
+        return (request) => map(method(map(request, encodeRequest)), encodeResponse);
       }
     }
+    function toSerializedForm(getMethod, serd) {
+      return newCallsEncoder(getMethod, serd.newSerializer, serd.newDeserializer);
+    }
     function fromSerializeForm(getMethod, serd) {
-      return (methodInfo) => {
-        const method = getMethod(methodInfo);
-        const decodeRequest = serd.newDeserializer(methodInfo.requestType);
-        const encodeResponse = serd.newSerializer(methodInfo.responseType);
-        return (request) => map(method(map(request, decodeRequest)), encodeResponse);
-      }
+      return newCallsEncoder(getMethod, serd.newDeserializer, serd.newSerializer);
     }
 
     function newHandler(ast, getMethod) {
